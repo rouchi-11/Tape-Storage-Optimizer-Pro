@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tape Storage Optimizer Pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, #1e293b 0%, #7e22ce 50%, #1e293b 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .icon-box {
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+            padding: 1rem;
+            border-radius: 12px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        h1 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .subtitle {
+            color: rgba(233, 213, 255, 0.9);
+            font-size: 0.875rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: scale(1.05);
+        }
+
+        .stat-card.blue {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.2));
+        }
+
+        .stat-card.green {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(22, 163, 74, 0.2));
+        }
+
+        .stat-card.yellow {
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.2), rgba(202, 138, 4, 0.2));
+        }
+
+        .stat-card.red {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.2));
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .panel h2 {
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        input[type="number"], input[type="text"] {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 0.75rem;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        label {
+            color: rgba(233, 213, 255, 0.9);
+            font-size: 0.875rem;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
+        }
+
+        .btn-add {
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            color: white;
+            width: 100%;
+        }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .preset-btn {
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .preset-btn.blue { background: rgba(59, 130, 246, 0.2); }
+        .preset-btn.green { background: rgba(34, 197, 94, 0.2); }
+        .preset-btn.purple { background: rgba(168, 85, 247, 0.2); }
+        .preset-btn.red { background: rgba(239, 68, 68, 0.2); }
+
+        .file-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 1rem;
+        }
+
+        .file-item {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .file-item:hover {
+            transform: scale(1.02);
+        }
+
+        .file-info {
+            color: white;
+        }
+
+        .file-name {
+            font-weight: 600;
+        }
+
+        .file-size {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        .delete-btn {
+            background: rgba(239, 68, 68, 0.2);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .tape-container {
+            margin-bottom: 2rem;
+        }
+
+        .tape-card {
+            background: linear-gradient(135deg, rgba(126, 34, 206, 0.3), rgba(126, 34, 206, 0.2));
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 2px solid rgba(168, 85, 247, 0.3);
+            margin-bottom: 1.5rem;
+        }
+
+        .tape-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .tape-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .tape-usage {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.125rem;
+        }
+
+        .tape-visual {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .reel {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6b7280, #374151);
+            border: 4px solid #4b5563;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .reel-inner {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #111827;
+            border: 2px solid #4b5563;
+        }
+
+        .tape-strip {
+            flex: 1;
+            height: 120px;
+            background: linear-gradient(180deg, #374151, #1f2937);
+            border-radius: 16px;
+            border: 4px solid #4b5563;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .file-segment {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: filter 0.2s;
+            position: relative;
+        }
+
+        .file-segment:hover {
+            filter: brightness(1.1);
+        }
+
+        .file-segment .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1f2937;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 0.5rem;
+            z-index: 10;
+        }
+
+        .file-segment:hover .tooltip {
+            opacity: 1;
+        }
+
+        .empty-space {
+            height: 100%;
+            background: linear-gradient(135deg, #4b5563, #374151);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.875rem;
+        }
+
+        .file-legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .legend-text {
+            color: white;
+            font-size: 0.875rem;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .legend-name {
+            font-weight: 600;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .legend-size {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.75rem;
+        }
+
+        .efficiency-panel {
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.1), rgba(249, 115, 22, 0.1));
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .metric-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+
+        .metric-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.75rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .comparison-chart {
+            margin-top: 1rem;
+        }
+
+        .chart-item {
+            margin-bottom: 1rem;
+        }
+
+        .chart-label {
+            display: flex;
+            justify-content: space-between;
+            color: white;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .chart-bar-container {
+            background: rgba(255, 255, 255, 0.1);
+            height: 32px;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .chart-bar {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+            transition: width 1s ease;
+        }
+
+        .chart-bar.green {
+            background: linear-gradient(90deg, #22c55e, #16a34a);
+        }
+
+        .chart-bar.blue {
+            background: linear-gradient(90deg, #3b82f6, #2563eb);
+        }
+
+        .chart-bar.red {
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+        }
+
+        .steps-container {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .step-item {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            border: 2px solid;
+            transition: all 0.3s;
+        }
+
+        .step-item.active {
+            transform: scale(1.02);
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);
+        }
+
+        .step-item.inactive {
+            opacity: 0.5;
+        }
+
+        .step-item.sort {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .step-item.fit {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+
+        .step-item.new {
+            background: rgba(168, 85, 247, 0.1);
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+
+        .step-item.complete {
+            background: rgba(234, 179, 8, 0.1);
+            border-color: rgba(234, 179, 8, 0.3);
+        }
+
+        .step-message {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-details {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.875rem;
+        }
+
+        .color-1 { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+        .color-2 { background: linear-gradient(135deg, #a855f7, #9333ea); }
+        .color-3 { background: linear-gradient(135deg, #ec4899, #db2777); }
+        .color-4 { background: linear-gradient(135deg, #22c55e, #16a34a); }
+        .color-5 { background: linear-gradient(135deg, #eab308, #ca8a04); }
+        .color-6 { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .color-7 { background: linear-gradient(135deg, #6366f1, #4f46e5); }
+        .color-8 { background: linear-gradient(135deg, #14b8a6, #0d9488); }
+        .color-9 { background: linear-gradient(135deg, #f97316, #ea580c); }
+        .color-10 { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+
+        .hidden {
+            display: none;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .nav-buttons button {
+            flex: 1;
+            padding: 0.5rem;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <div class="icon-box">
+                    <svg width="32" height="32" fill="white" viewBox="0 0 24 24">
+                        <path d="M20 6H10a1 1 0 00-1 1v10a1 1 0 001 1h10a1 1 0 001-1V7a1 1 0 00-1-1zM4 6h2v12H4a1 1 0 01-1-1V7a1 1 0 011-1z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1>Tape Storage Optimizer Pro</h1>
+                    <p class="subtitle">Greedy Algorithm • Real-time Visualization • Step-by-step Analysis</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid" id="statsGrid"></div>
+
+        <!-- Main Grid -->
+        <div class="main-grid">
+            <!-- Left Panel -->
+            <div>
+                <div class="panel">
+                    <h2>⚡ Configuration</h2>
+                    <label>Tape Capacity (GB)</label>
+                    <input type="number" id="tapeCapacity" value="15" min="1">
+                    
+                    <label style="margin-top: 1rem;">Quick Start Presets</label>
+                    <div class="preset-grid">
+                        <button class="preset-btn blue" onclick="loadPreset('small')">Small (3)</button>
+                        <button class="preset-btn green" onclick="loadPreset('medium')">Medium (5)</button>
+                        <button class="preset-btn purple" onclick="loadPreset('large')">Large (8)</button>
+                        <button class="preset-btn red" onclick="loadPreset('extreme')">Extreme (10)</button>
+                    </div>
+
+                    <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; margin-top: 1rem;">
+                        <label>Add New File</label>
+                        <input type="text" id="fileName" placeholder="File name">
+                        <input type="number" id="fileSize" placeholder="Size (GB)" min="0.1" step="0.1">
+                        <button class="btn-add" onclick="addFile()">➕ Add File</button>
+                    </div>
+
+                    <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; margin-top: 1rem;">
+                        <button class="btn-primary" onclick="runOptimizer()">▶️ Run Optimizer</button>
+                        <button class="btn-secondary" onclick="startAutoPlay()" id="autoPlayBtn" style="display:none;">▶️ Auto-Play Steps</button>
+                        <div class="nav-buttons" id="navButtons" style="display:none;">
+                            <button class="btn-secondary" onclick="previousStep()">◀ Previous</button>
+                            <button class="btn-secondary" onclick="nextStep()">Next ▶</button>
+                        </div>
+                        <button class="btn-secondary" onclick="reset()">🔄 Reset</button>
+                    </div>
+                </div>
+
+                <!-- Files List -->
+                <div class="panel" style="margin-top: 1rem;">
+                    <h2>📁 Files (<span id="fileCount">0</span>)</h2>
+                    <div class="file-list" id="filesList"></div>
+                </div>
+            </div>
+
+            <!-- Right Panel -->
+            <div>
+                <!-- Efficiency Metrics -->
+                <div id="efficiencyPanel" class="hidden"></div>
+
+                <!-- Tape Visualization -->
+                <div id="tapeVisualization" class="hidden"></div>
+
+                <!-- Comparison Chart -->
+                <div id="comparisonChart" class="hidden"></div>
+
+                <!-- Steps -->
+                <div id="stepsPanel" class="hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let files = [
+            { id: 1, name: 'File A', size: 5 },
+            { id: 2, name: 'File B', size: 3 },
+            { id: 3, name: 'File C', size: 8 },
+            { id: 4, name: 'File D', size: 2 },
+            { id: 5, name: 'File E', size: 6 }
+        ];
+        let result = null;
+        let steps = [];
+        let efficiency = null;
+        let currentStep = -1;
+        let autoPlayInterval = null;
+
+        const presets = {
+            small: { files: [
+                { id: 1, name: 'Doc1', size: 2 },
+                { id: 2, name: 'Doc2', size: 3 },
+                { id: 3, name: 'Doc3', size: 5 }
+            ], capacity: 10 },
+            medium: { files: [
+                { id: 1, name: 'Video1', size: 8 },
+                { id: 2, name: 'Video2', size: 4 },
+                { id: 3, name: 'Video3', size: 6 },
+                { id: 4, name: 'Video4', size: 3 },
+                { id: 5, name: 'Video5', size: 7 }
+            ], capacity: 15 },
+            large: { files: [
+                { id: 1, name: 'Archive1', size: 12 },
+                { id: 2, name: 'Archive2', size: 5 },
+                { id: 3, name: 'Archive3', size: 8 },
+                { id: 4, name: 'Archive4', size: 3 },
+                { id: 5, name: 'Archive5', size: 10 },
+                { id: 6, name: 'Archive6', size: 6 },
+                { id: 7, name: 'Archive7', size: 4 },
+                { id: 8, name: 'Archive8', size: 9 }
+            ], capacity: 20 },
+            extreme: { files: [
+                { id: 1, name: 'Data1', size: 15 },
+                { id: 2, name: 'Data2', size: 2 },
+                { id: 3, name: 'Data3', size: 18 },
+                { id: 4, name: 'Data4', size: 7 },
+                { id: 5, name: 'Data5', size: 12 },
+                { id: 6, name: 'Data6', size: 4 },
+                { id: 7, name: 'Data7', size: 9 },
+                { id: 8, name: 'Data8', size: 14 },
+                { id: 9, name: 'Data9', size: 6 },
+                { id: 10, name: 'Data10', size: 11 }
+            ], capacity: 25 }
+        };
+
+        function getTapeCapacity() {
+            return parseFloat(document.getElementById('tapeCapacity').value) || 15;
+        }
+
+        function calculateOptimalTime() {
+            const sorted = [...files].sort((a, b) => a.size - b.size);
+            let time = 0, pos = 0;
+            sorted.forEach(f => {
+                pos += f.size;
+                time += pos;
+            });
+            return time;
+        }
+
+        function calculateWorstTime() {
+            const sorted = [...files].sort((a, b) => b.size - a.size);
+            let time = 0, pos = 0;
+            sorted.forEach(f => {
+                pos += f.size;
+                time += pos;
+            });
+            return time;
+        }
+
+        function getColorClass(index) {
+            return `color-${(index % 10) + 1}`;
+        }
+
+        function updateStats() {
+            const totalSize = files.reduce((sum, f) => sum + f.size, 0);
+            const optimal = calculateOptimalTime();
+            const worst = calculateWorstTime();
+
+            document.getElementById('statsGrid').innerHTML = `
+                <div class="stat-card blue">
+                    <div class="stat-label">Total Files</div>
+                    <div class="stat-value">${files.length}</div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-label">Total Size</div>
+                    <div class="stat-value">${totalSize.toFixed(1)} GB</div>
+                </div>
+                <div class="stat-card yellow">
+                    <div class="stat-label">Best Case</div>
+                    <div class="stat-value">${optimal}</div>
+                </div>
+                <div class="stat-card red">
+                    <div class="stat-label">Worst Case</div>
+                    <div class="stat-value">${worst}</div>
+                </div>
+            `;
+        }
+
+        function renderFilesList() {
+            const list = document.getElementById('filesList');
+            list.innerHTML = files.map((file, idx) => `
+                <div class="file-item ${getColorClass(idx)}" style="border-left: 4px solid;">
+                    <div class="file-info">
+                        <div class="file-name">${file.name}</div>
+                        <div class="file-size">${file.size} GB</div>
+                    </div>
+                    <button class="delete-btn" onclick="removeFile(${file.id})">🗑️</button>
+                </div>
+            `).join('');
+            document.getElementById('fileCount').textContent = files.length;
+        }
+
+        function loadPreset(preset) {
+            files = presets[preset].files;
+            document.getElementById('tapeCapacity').value = presets[preset].capacity;
+            reset();
+            updateStats();
+            renderFilesList();
+        }
+
+        function addFile() {
+            const name = document.getElementById('fileName').value;
+            const size = parseFloat(document.getElementById('fileSize').value);
+            if (name && size > 0) {
+                files.push({ id: Date.now(), name, size });
+                document.getElementById('fileName').value = '';
+                document.getElementById('fileSize').value = '';
+                updateStats();
+                renderFilesList();
+            }
+        }
+
+        function removeFile(id) {
+            files = files.filter(f => f.id !== id);
+            updateStats();
+            renderFilesList();
+        }
+
+        function runOptimizer() {
+            const capacity = getTapeCapacity();
+            const sorted = [...files].sort((a, b) => a.size - b.size);
+            const tapes = [];
+            let totalTime = 0;
+            steps = [];
+
+            steps.push({
+                type: 'sort',
+                message: `Sorted ${files.length} files by size (smallest first)`,
+                details: `Original: ${files.map(f => f.name).join(', ')} → Sorted: ${sorted.map(f => f.name).join(', ')}`
+            });
+
+            sorted.forEach((file, idx) => {
+                let placed = false;
+                let tapeNum = null;
+
+                for (let i = 0; i < tapes.length; i++) {
+                    if (tapes[i].remainingCapacity >= file.size) {
+                        tapes[i].files.push(file);
+                        tapes[i].usedCapacity += file.size;
+                        tapes[i].remainingCapacity -= file.size;
+                        placed = true;
+                        tapeNum = i + 1;
+
+                        steps.push({
+                            type: 'fit',
+                            message: `Placed "${file.name}" (${file.size}GB) into Tape ${tapeNum}`,
+                            details: `Space available: ${tapes[i].remainingCapacity + file.size}GB → Remaining: ${tapes[i].remainingCapacity}GB`
+                        });
+                        break;
+                    }
+                }
+
+                if (!placed) {
+                    tapes.push({
+                        id: tapes.length + 1,
+                        files: [file],
+                        usedCapacity: file.size,
+                        remainingCapacity: capacity - file.size
+                    });
+                    tapeNum = tapes.length;
+
+                    steps.push({
+                        type: 'new',
+                        message: `Created Tape ${tapeNum} for "${file.name}" (${file.size}GB)`,
+                        details: `Needed ${file.size}GB. Created new tape with ${capacity - file.size}GB remaining.`
+                    });
+                }
+            });
+
+            tapes.forEach(tape => {
+                let cumTime = 0;
+                tape.files.forEach(file => {
+                    cumTime += file.size;
+                    totalTime += cumTime;
+                });
+            });
+
+            const optimal = calculateOptimalTime();
+            const worst = calculateWorstTime();
+            const timeEff = ((optimal / totalTime) * 100).toFixed(1);
+            const totalUsed = tapes.reduce((sum, t) => sum + t.usedCapacity, 0);
+            const totalAvailable = tapes.length * capacity;
+            const spaceEff = ((totalUsed / totalAvailable) * 100).toFixed(1);
+
+            efficiency = {
+                timeEfficiency: timeEff,
+                spaceEfficiency: spaceEff,
+                optimalTime: optimal,
+                actualTime: totalTime,
+                wastedSpace: totalAvailable - totalUsed
+            };
+
+            steps.push({
+                type: 'complete',
+                message: `✓ Complete! Used ${tapes.length} tape(s) • Retrieval time: ${totalTime}`,
+                details: `Time efficiency: ${timeEff}% • Space efficiency: ${spaceEff}%`
+            });
+
+            result = { tapes, totalRetrievalTime: totalTime, tapesUsed: tapes.length };
+            renderResults();
+        }
+
+        function renderResults() {
+            // Show efficiency panel
+            document.getElementById('efficiencyPanel').className = 'efficiency-panel';
+            document.getElementById('efficiencyPanel').innerHTML = `
+                <h2 style="color: white; margin-bottom: 1rem;">📊 Performance Metrics</h2>
+                <div class="metrics-grid">
+                    <div class="metric-box">
+                        <div class="metric-label">Time Efficiency</div>
+                        <div class="metric-value" style="color: #22c55e;">${efficiency.timeEfficiency}%</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Space Efficiency</div>
+                        <div class="metric-value" style="color: #3b82f6;">${efficiency.spaceEfficiency}%</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Tapes Used</div>
+                        <div class="metric-value" style="color: #a855f7;">${result.tapesUsed}</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Optimal Time</div>
+                        <div class="metric-value">${efficiency.optimalTime}</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Actual Time</div>
+                        <div class="metric-value">${efficiency.actualTime}</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Wasted Space</div>
+                        <div class="metric-value" style="color: #ef4444;">${efficiency.wastedSpace} GB</div>
+                    </div>
+                </div>
+            `;
+
+            // Show tape visualization
+            document.getElementById('tapeVisualization').className = 'panel';
+            document.getElementById('tapeVisualization').innerHTML = `
+                <h2 style="color: white; margin-bottom: 1rem;">💾 Tape Allocation Visualization</h2>
+                ${result.tapes.map(tape => renderTape(tape)).join('')}
+            `;
+
+            // Show comparison chart
+            const worst = calculateWorstTime();
+            document.getElementById('comparisonChart').className = 'panel';
+            document.getElementById('comparisonChart').innerHTML = `
+                <h2 style="color: white; margin-bottom: 1rem;">📈 Algorithm Comparison</h2>
+                <div class="comparison-chart">
+                    <div class="chart-item">
+                        <div class="chart-label">
+                            <span>Greedy (Smallest First)</span>
+                            <span><strong>${result.totalRetrievalTime}</strong></span>
+                        </div>
+                        <div class="chart-bar-container">
+                            <div class="chart-bar green" style="width: ${(result.totalRetrievalTime / worst) * 100}%">
+                                ${((result.totalRetrievalTime / worst) * 100).toFixed(0)}%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-item">
+                        <div class="chart-label">
+                            <span>Optimal (Theoretical Best)</span>
+                            <span><strong>${efficiency.optimalTime}</strong></span>
+                        </div>
+                        <div class="chart-bar-container">
+                            <div class="chart-bar blue" style="width: ${(efficiency.optimalTime / worst) * 100}%">
+                                ${((efficiency.optimalTime / worst) * 100).toFixed(0)}%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-item">
+                        <div class="chart-label">
+                            <span>Worst Case (Largest First)</span>
+                            <span><strong>${worst}</strong></span>
+                        </div>
+                        <div class="chart-bar-container">
+                            <div class="chart-bar red" style="width: 100%">
+                                100%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 1rem; background: rgba(168, 85, 247, 0.1); padding: 1rem; border-radius: 8px; border: 1px solid rgba(168, 85, 247, 0.3);">
+                    <div style="color: rgba(255,255,255,0.9); font-size: 0.875rem;">
+                        <strong>Analysis:</strong> The greedy algorithm achieves 
+                        <span style="color: #22c55e; font-weight: bold;">${efficiency.timeEfficiency}%</span> of optimal performance,
+                        saving <span style="color: #eab308; font-weight: bold;">${(worst - result.totalRetrievalTime).toFixed(0)}</span> 
+                        time units compared to worst case!
+                    </div>
+                </div>
+            `;
+
+            // Show steps panel
+            document.getElementById('stepsPanel').className = 'panel';
+            document.getElementById('stepsPanel').innerHTML = `
+                <h2 style="color: white; margin-bottom: 1rem;">🔄 Step-by-Step Process</h2>
+                <div class="steps-container" id="stepsContainer">
+                    ${steps.map((step, idx) => `
+                        <div class="step-item ${step.type} ${currentStep === idx ? 'active' : (currentStep >= 0 && idx > currentStep) ? 'inactive' : ''}">
+                            <div class="step-message">${step.message}</div>
+                            <div class="step-details">${step.details}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            document.getElementById('autoPlayBtn').style.display = 'block';
+            document.getElementById('navButtons').style.display = 'flex';
+        }
+
+        function renderTape(tape) {
+            const capacity = getTapeCapacity();
+            return `
+                <div class="tape-card">
+                    <div class="tape-header">
+                        <h3 class="tape-title">Tape ${tape.id}</h3>
+                        <div class="tape-usage">${tape.usedCapacity} / ${capacity} (${((tape.usedCapacity / capacity) * 100).toFixed(1)}% used)</div>
+                    </div>
+                    <div class="tape-visual">
+                        <div class="reel">
+                            <div class="reel-inner"></div>
+                        </div>
+                        <div class="tape-strip">
+                            ${tape.files.map((file, idx) => {
+                                const fileIdx = files.findIndex(f => f.id === file.id);
+                                const widthPercent = (file.size / capacity) * 100;
+                                const accessTime = tape.files.slice(0, idx + 1).reduce((sum, f) => sum + f.size, 0);
+                                return `
+                                    <div class="file-segment ${getColorClass(fileIdx)}" style="width: ${widthPercent}%">
+                                        <div style="font-size: ${widthPercent > 10 ? '0.875rem' : '0.75rem'};">${file.name}</div>
+                                        <div style="font-size: 0.75rem; opacity: 0.9;">${file.size}</div>
+                                        <div class="tooltip">
+                                            <div><strong>${file.name}</strong></div>
+                                            <div>Size: ${file.size} GB</div>
+                                            <div>Position: ${idx + 1} of ${tape.files.length}</div>
+                                            <div style="color: #eab308;">Access time: ${accessTime} units</div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                            ${tape.remainingCapacity > 0 ? `
+                                <div class="empty-space" style="width: ${(tape.remainingCapacity / capacity) * 100}%">
+                                    <div>Empty<br>${tape.remainingCapacity.toFixed(1)} GB</div>
+                                </div>
+                            ` : ''}
+                        </div>
+                        <div class="reel">
+                            <div class="reel-inner"></div>
+                        </div>
+                    </div>
+                    <div class="file-legend">
+                        ${tape.files.map((file, idx) => {
+                            const fileIdx = files.findIndex(f => f.id === file.id);
+                            return `
+                                <div class="legend-item">
+                                    <div class="legend-color ${getColorClass(fileIdx)}"></div>
+                                    <div class="legend-text">
+                                        <div class="legend-name">${file.name}</div>
+                                        <div class="legend-size">${file.size} GB</div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function startAutoPlay() {
+            currentStep = 0;
+            updateStepHighlight();
+            autoPlayInterval = setInterval(() => {
+                if (currentStep < steps.length - 1) {
+                    currentStep++;
+                    updateStepHighlight();
+                } else {
+                    clearInterval(autoPlayInterval);
+                }
+            }, 1500);
+        }
+
+        function previousStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                updateStepHighlight();
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                updateStepHighlight();
+            }
+        }
+
+        function updateStepHighlight() {
+            const container = document.getElementById('stepsContainer');
+            if (container) {
+                container.innerHTML = steps.map((step, idx) => `
+                    <div class="step-item ${step.type} ${currentStep === idx ? 'active' : (idx > currentStep) ? 'inactive' : ''}">
+                        <div class="step-message">${step.message}</div>
+                        <div class="step-details">${step.details}</div>
+                    </div>
+                `).join('');
+                
+                const activeStep = container.children[currentStep];
+                if (activeStep) {
+                    activeStep.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            }
+        }
+
+        function reset() {
+            result = null;
+            steps = [];
+            efficiency = null;
+            currentStep = -1;
+            if (autoPlayInterval) {
+                clearInterval(autoPlayInterval);
+                autoPlayInterval = null;
+            }
+            document.getElementById('efficiencyPanel').className = 'hidden';
+            document.getElementById('tapeVisualization').className = 'hidden';
+            document.getElementById('comparisonChart').className = 'hidden';
+            document.getElementById('stepsPanel').className = 'hidden';
+            document.getElementById('autoPlayBtn').style.display = 'none';
+            document.getElementById('navButtons').style.display = 'none';
+        }
+
+        // Initialize
+        updateStats();
+        renderFilesList();
+    </script>
+</body>
+</html>
